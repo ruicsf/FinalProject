@@ -5,9 +5,10 @@
       <map>
         <entry key="app/src/main/res/layout/activity_add_term.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2864583333333333" />
-        <entry key="app/src/main/res/layout/activity_term_edit.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_term_edit.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_terms_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.25" />
+        <entry key="app/src/main/res/menu/main_menu.xml" value="0.1796875" />
       </map>
     </option>
   </component>

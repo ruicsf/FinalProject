@@ -1,8 +1,8 @@
 package com.example.finalproject.UI;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.finalproject.Entities.TermTable;
 import com.example.finalproject.R;
@@ -24,6 +25,16 @@ import java.util.List;
 import java.util.Locale;
 
 public class AddTerm extends AppCompatActivity {
+    public static final String EXTRA_ID =
+            "com.example.finalproject.EXTRA_ID";
+    public static final String EXTRA_TITLE =
+            "com.example.finalproject.EXTRA_TITLE";
+
+    public static final String EXTRA_START =
+            "com.example.finalproject.EXTRA_START";
+    public static final String EXTRA_END =
+            "com.example.finalproject.EXTRA_END";
+
     List<TermTable> termTableList;
     DatabaseRepository repository;
 
@@ -60,11 +71,9 @@ public class AddTerm extends AppCompatActivity {
                 calendarStart.set(Calendar.DAY_OF_MONTH, day);
                 String myFormat = "MM/dd/yyyy";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
                 updateLabelStart();
             }
         };
-
         startDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,8 +81,6 @@ public class AddTerm extends AppCompatActivity {
                         , calendarStart.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-
-
         eDate = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -82,12 +89,10 @@ public class AddTerm extends AppCompatActivity {
                 calendarEnd.set(Calendar.DAY_OF_MONTH, day);
                 String myFormat = "MM/dd/yyyy";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
                 updateLabelEnd();
             }
         };
-
-       endDate.setOnClickListener(new View.OnClickListener() {
+        endDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new DatePickerDialog(AddTerm.this, eDate, calendarEnd.get(Calendar.YEAR), calendarEnd.get(Calendar.MONTH)
@@ -95,7 +100,51 @@ public class AddTerm extends AppCompatActivity {
             }
         });
 
+        Log.d("extra", EXTRA_ID);
+
     }
+
+    public void saveTermOnClick(View view) {
+        String name = termName.getText().toString();
+        String start = startDate.getText().toString();
+        String end = endDate.getText().toString();
+        TermTable term;
+
+        if (name.trim().isEmpty() || start.trim().isEmpty() || end.trim().isEmpty()) {
+
+            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+            alertDialog.setTitle("Alert");
+            alertDialog.setMessage("Field(s) left blank");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+            alertDialog.show();
+
+        } else {
+
+            List<TermTable> allTerms = repository.getAllTermsFromRepo();
+            int termsSize = allTerms.size();
+            if (!allTerms.isEmpty()) {
+                int lastId = allTerms.get(termsSize - 1).getTermId();
+
+                term = new TermTable(lastId + 1, name, start, end);
+
+            } else {
+                term = new TermTable(1, name, start, end);
+            }
+
+            repository.insert(term);
+
+            Intent intent = new Intent(this, TermsList.class);
+            startActivity(intent);
+
+        }
+    }
+
 
     private void updateLabelStart() {
         String format = "MM/dd/yyyy";
@@ -113,37 +162,6 @@ public class AddTerm extends AppCompatActivity {
 
     }
 
-    public void saveTermOnClick(View view) {
-        String name = termName.getText().toString();
-        String start = startDate.getText().toString();
-        String end = endDate.getText().toString();
-
-        if (name.isEmpty() || start.isEmpty() || end.isEmpty()) {
-            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-            alertDialog.setTitle("Alert");
-            alertDialog.setMessage("Field(s) left blank");
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    });
-            alertDialog.show();
-        } else {
-            List<TermTable> allTerms = repository.getAllTermsFromRepo();
-            int lastId = allTerms.get(allTerms.size() - 1).getTermId();
-
-            TermTable term = new TermTable(lastId + 1, name, start, end);
-            repository.insert(term);
-
-            Intent intent = new Intent(this, TermsList.class);
-            startActivity(intent);
-        }
-
-
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -156,3 +174,9 @@ public class AddTerm extends AppCompatActivity {
     }
 
 }
+
+
+
+/*
+
+ */

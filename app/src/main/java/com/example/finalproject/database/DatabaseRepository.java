@@ -54,9 +54,26 @@ public class DatabaseRepository {
         }
     }
 
+    public void update(TermTable termTable){
+        SchedulerDatabase.dbWriteExecutor.execute(()->{
+            termDao.update(termTable);
+        });
+        try {
+            Thread.sleep(500);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+
     public void delete (TermTable termTable){
         SchedulerDatabase.dbWriteExecutor.execute(()->{
             termDao.delete(termTable);
+        });
+    }
+
+    public void deleteAllTerms () {
+        SchedulerDatabase.dbWriteExecutor.execute(()->{
+            termDao.deleteAllFromTermsTable();
         });
     }
 

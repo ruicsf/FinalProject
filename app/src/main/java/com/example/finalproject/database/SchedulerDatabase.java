@@ -58,6 +58,7 @@ public abstract class SchedulerDatabase extends RoomDatabase {
                 termDao.insert(termDbTable);
                 TermTable terDbTable2 = new TermTable(2,"Term 2", "03/01/2022", "03/28/2022");
                 termDao.insert(terDbTable2);
+
 //                TermTable terDbTable3 = new TermTable(3, "Term 3", "04/01/2022", "04/28/2022");
 //                termDao.insert(terDbTable3);
 

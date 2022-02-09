@@ -21,6 +21,7 @@ public class TermTable {
         this.endOfTerm = endOfTerm;
     }
 
+
     // Getters & Setters
     public int getTermId() {
         return termId;
