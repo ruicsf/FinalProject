@@ -20,9 +20,8 @@ import java.util.List;
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder> {
 
     public List<TermTable> mTermsList;
-
-    private LayoutInflater inflater;
     private Context context;
+    private LayoutInflater inflater;
 
     public TermAdapter(Context context) {
         inflater = LayoutInflater.from(context);
@@ -31,12 +30,12 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
 
     // CLASS
     public class TermViewHolder extends RecyclerView.ViewHolder {
-        public TextView termItemLayout;
+        public TextView recyclerViewItemLayout;
         //todo add course here
 
         private TermViewHolder(@NonNull View itemView) {
             super(itemView);
-            termItemLayout = itemView.findViewById(R.id.term_item_layout); // -> TEXT ON XML CARD
+            recyclerViewItemLayout = itemView.findViewById(R.id.item_layout); // -> TEXT ON XML CARD
             //todo add course here
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -49,23 +48,10 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
                     intent.putExtra("termId", currentTerm.getTermId());
                     intent.putExtra("position", position);
                     context.startActivity(intent);
-                    Log.d("id", String.valueOf(currentTerm.getTermId()));
+//                    Log.d("id", String.valueOf(currentTerm.getTermId()));
             }
         });
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    int position = getAdapterPosition();
-//                    TermTable currentTerm = mTermsList.get(position);
-//                     Intent intent = new Intent(context, EditTerm.class);
-//                     intent.putExtra("termId", currentTerm.getTermId());
-//                     intent.putExtra("termTitle", currentTerm.getTermTitle());
-//                     intent.putExtra("startOfTerm", currentTerm.getStartOfTerm());
-//                     intent.putExtra("endOfTerm", currentTerm.getEndOfTerm());
-//                     intent.putExtra("position", position);
-//                     context.startActivity(intent);
-//                }
-//            });
+
     }
 }
 
@@ -75,14 +61,13 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
     public TermViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
        //todo add if statement?
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
-        TermViewHolder tvh = new TermViewHolder(v);
-        return tvh;
+        return new TermViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TermViewHolder holder, int position) {
         TermTable currentTerm = mTermsList.get(position);
-        holder.termItemLayout.setText(currentTerm.getTermTitle());
+        holder.recyclerViewItemLayout.setText(currentTerm.getTermTitle());
 
         //todo code for courses here
     }

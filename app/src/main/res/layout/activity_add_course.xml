@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:layout_marginTop="35dp"
+    android:paddingTop="20dp"
+    tools:context=".UI.AddEditCourse">
+
+    <TextView
+        android:id="@+id/assessmentText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="#9ECEF3"
+        android:text="Assessments"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/instructor_recyclerView"
+        tools:layout_editor_absoluteX="3dp"
+        tools:layout_editor_absoluteY="500dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/assessment_recyclerView"
+        android:layout_width="372dp"
+        android:layout_height="130dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/assessmentText" />
+
+    <Button
+        android:id="@+id/save_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="205dp"
+        android:layout_marginBottom="325dp"
+        android:onClick="saveTermOnClick"
+        android:text="Save Course"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_course_notes"
+        app:layout_constraintVertical_bias="0.518" />
+
+    <EditText
+        android:id="@+id/add_course_status"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        app:layout_constraintBottom_toBottomOf="@id/statusText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/statusText" />
+
+    <TextView
+        android:id="@+id/notesText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Notes:"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusText" />
+
+    <TextView
+        android:id="@+id/endText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="End Date: "
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/startText" />
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Status:"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/endText" />
+
+    <EditText
+        android:id="@+id/add_course_notes"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:ellipsize="end"
+        app:layout_constraintBottom_toBottomOf="@id/notesText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/notesText" />
+
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:text="Course Name: "
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/add_course_name"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        app:layout_constraintBottom_toBottomOf="@id/nameText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/nameText" />
+
+    <TextView
+        android:id="@+id/startText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Start Date: "
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nameText" />
+
+    <EditText
+        android:id="@+id/add_course_end_date"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:ems="10"
+        android:hint="01/01/2022"
+        android:inputType="date"
+        app:layout_constraintBottom_toBottomOf="@id/endText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/endText" />
+
+    <EditText
+        android:id="@+id/add_course_start_date"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:ems="10"
+        android:hint="12/01/2021"
+        android:inputType="date"
+        app:layout_constraintBottom_toBottomOf="@id/startText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/startText" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/instructor_recyclerView"
+        android:layout_width="370dp"
+        android:layout_height="126dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/instructorText" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_instructor"
+        android:onClick="addInstructorButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/ic_baseline_add_24"
+        app:layout_constraintBottom_toBottomOf="@id/instructor_recyclerView"
+        app:layout_constraintEnd_toEndOf="@id/instructor_recyclerView" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_assessment_btn"
+        android:onClick="addAssessmentButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/ic_baseline_add_24"
+        app:layout_constraintBottom_toBottomOf="@id/assessment_recyclerView"
+        app:layout_constraintEnd_toEndOf="@id/assessment_recyclerView" />
+
+    <TextView
+        android:id="@+id/instructorText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#9ECEF3"
+        android:text="Instructor"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/save_btn"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="353dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

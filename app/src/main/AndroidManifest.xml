@@ -10,21 +10,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject">
         <activity
-            android:name=".UI.EditTerm"
-            android:label="Edit Term"
+            android:name=".UI.AddEditInstructor"
             android:exported="false" />
+        <activity
+            android:name=".UI.AddEditAssessment"
+            android:exported="false" />
+        <activity
+            android:name=".UI.AddEditCourse"
+            android:exported="false"
+            android:label="Add Course" />
+        <activity
+            android:name=".UI.EditTerm"
+            android:exported="false"
+            android:label="Edit Term" />
         <activity
             android:name=".UI.AddTerm"
             android:exported="false"
             android:label="Add Term" />
         <activity
-            android:name=".UI.TermsList"
-            android:exported="false"
-            android:label="Terms List" />
-        <activity
             android:name=".UI.MainActivity"
+            android:exported="false"
+            android:label="Home Page" />
+        <activity
+            android:name=".UI.TermsList"
             android:exported="true"
-            android:label="Home Page">
+            android:label="Terms List">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

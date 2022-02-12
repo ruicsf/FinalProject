@@ -23,8 +23,6 @@ import java.util.List;
 
 public class TermsList extends AppCompatActivity {
 
-
-
     private RecyclerView mRecyclerView;
     private TermAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManger;
@@ -44,12 +42,13 @@ public class TermsList extends AppCompatActivity {
         getTermsList();
         buildRecyclerView();
 
+        // for Deleting with swipe
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
             }
-
+            // for swiping and deleting
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 // todo add code for delete not allowed here with courses
@@ -60,26 +59,16 @@ public class TermsList extends AppCompatActivity {
             }
         }).attachToRecyclerView(mRecyclerView);
 
-//        mAdapter.setTermOnItemClickListener(new TermAdapter.TermOnItemClickListener() {
-//            @Override
-//            public void termOnItemClick(TermTable term) {
-//                Intent intent = new Intent(TermsList.this, EditTerm.class);
-//                intent.putExtra(AddTerm.EXTRA_ID, term.getTermId());
-//                intent.putExtra(AddTerm.EXTRA_TITLE, term.getTermTitle());
-//                intent.putExtra(AddTerm.EXTRA_START, term.getStartOfTerm());
-//                intent.putExtra(AddTerm.EXTRA_END, term.getEndOfTerm());
-//
-//                startActivity(intent);
-//            }
-//        });
     }
 
+    // get application
     public void getTermsList() {
         databaseRepository = new DatabaseRepository(getApplication());
         termTableList = databaseRepository.getAllTermsFromRepo();
         //todo add course and assessment list here
     }
 
+    // builder
     public void buildRecyclerView() {
         mRecyclerView = findViewById(R.id.recyler_view_terms);
         mRecyclerView.setHasFixedSize(true);
@@ -92,6 +81,7 @@ public class TermsList extends AppCompatActivity {
         //todo add course version here
     }
 
+    // Floating action button to add term
     public void addTermOnClick(View view) {
         Intent intent = new Intent(this, AddTerm.class);
         startActivity(intent);

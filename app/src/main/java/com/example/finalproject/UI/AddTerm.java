@@ -7,13 +7,11 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.finalproject.Entities.TermTable;
 import com.example.finalproject.R;
@@ -25,30 +23,19 @@ import java.util.List;
 import java.util.Locale;
 
 public class AddTerm extends AppCompatActivity {
-    public static final String EXTRA_ID =
-            "com.example.finalproject.EXTRA_ID";
-    public static final String EXTRA_TITLE =
-            "com.example.finalproject.EXTRA_TITLE";
-
-    public static final String EXTRA_START =
-            "com.example.finalproject.EXTRA_START";
-    public static final String EXTRA_END =
-            "com.example.finalproject.EXTRA_END";
-
     List<TermTable> termTableList;
     DatabaseRepository repository;
+
+    DatePickerDialog.OnDateSetListener mStartDatePicker;
+    DatePickerDialog.OnDateSetListener mEndDatePicker;
 
     EditText termName;
     EditText startDate;
     EditText endDate;
 
-    Calendar calendarStart = Calendar.getInstance();
-    Calendar calendarEnd = Calendar.getInstance();
+    Calendar mCalendarStart = Calendar.getInstance();
+    Calendar mCalendarEnd = Calendar.getInstance();
 
-    DatePickerDialog.OnDateSetListener sDate;
-    DatePickerDialog.OnDateSetListener eDate;
-
-    Button saveBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +50,12 @@ public class AddTerm extends AppCompatActivity {
         endDate = findViewById(R.id.edit_text_endDate);
         repository = new DatabaseRepository(getApplication());
 
-        sDate = new DatePickerDialog.OnDateSetListener() {
+        mStartDatePicker = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendarStart.set(Calendar.YEAR, year);
-                calendarStart.set(Calendar.MONTH, month);
-                calendarStart.set(Calendar.DAY_OF_MONTH, day);
+                mCalendarStart.set(Calendar.YEAR, year);
+                mCalendarStart.set(Calendar.MONTH, month);
+                mCalendarStart.set(Calendar.DAY_OF_MONTH, day);
                 String myFormat = "MM/dd/yyyy";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                 updateLabelStart();
@@ -77,16 +64,16 @@ public class AddTerm extends AppCompatActivity {
         startDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(AddTerm.this, sDate, calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH)
-                        , calendarStart.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(AddTerm.this, mStartDatePicker, mCalendarStart.get(Calendar.YEAR), mCalendarStart.get(Calendar.MONTH)
+                        , mCalendarStart.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-        eDate = new DatePickerDialog.OnDateSetListener() {
+        mEndDatePicker = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendarEnd.set(Calendar.YEAR, year);
-                calendarEnd.set(Calendar.MONTH, month);
-                calendarEnd.set(Calendar.DAY_OF_MONTH, day);
+                mCalendarEnd.set(Calendar.YEAR, year);
+                mCalendarEnd.set(Calendar.MONTH, month);
+                mCalendarEnd.set(Calendar.DAY_OF_MONTH, day);
                 String myFormat = "MM/dd/yyyy";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                 updateLabelEnd();
@@ -95,12 +82,10 @@ public class AddTerm extends AppCompatActivity {
         endDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(AddTerm.this, eDate, calendarEnd.get(Calendar.YEAR), calendarEnd.get(Calendar.MONTH)
-                        , calendarEnd.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(AddTerm.this, mEndDatePicker, mCalendarEnd.get(Calendar.YEAR), mCalendarEnd.get(Calendar.MONTH)
+                        , mCalendarEnd.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-
-        Log.d("extra", EXTRA_ID);
 
     }
 
@@ -150,7 +135,7 @@ public class AddTerm extends AppCompatActivity {
         String format = "MM/dd/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
 
-        startDate.setText(sdf.format(calendarStart.getTime()));
+        startDate.setText(sdf.format(mCalendarStart.getTime()));
 
     }
 
@@ -158,7 +143,7 @@ public class AddTerm extends AppCompatActivity {
         String format = "MM/dd/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
 
-        endDate.setText(sdf.format(calendarEnd.getTime()));
+        endDate.setText(sdf.format(mCalendarEnd.getTime()));
 
     }
 

@@ -93,6 +93,7 @@
         android:layout_marginTop="75dp"
         app:layout_constraintStart_toStartOf="@id/termList_saveTerm_btn"
         android:layout_marginLeft="200dp"
+        android:onClick="addCourseOnClick"
         android:text="Add course"/>
 
 
@@ -102,7 +103,10 @@
         android:layout_height="396dp"
         android:layout_marginTop="150dp"
         android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView3" />
 

@@ -1,141 +1,130 @@
 package com.example.finalproject.UI;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import com.example.finalproject.Adapters.CourseAdapter;
+import com.example.finalproject.Entities.CourseTable;
 import com.example.finalproject.Entities.TermTable;
 import com.example.finalproject.R;
 import com.example.finalproject.database.DatabaseRepository;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
 public class EditTerm extends AppCompatActivity {
-    DatabaseRepository mRepository;
-    int termId;
-    String name;
-    String startD;
-    String endD;
-    TermTable selectedTerm;
-
-    EditText termName;
-    EditText startDate;
-    EditText endDate;
-
-    Calendar calendarStart = Calendar.getInstance();
-    Calendar calendarEnd = Calendar.getInstance();
-    DatePickerDialog.OnDateSetListener sDate;
-    DatePickerDialog.OnDateSetListener eDate;
-
+    private RecyclerView mRecyclerView;private RecyclerView.LayoutManager mLayoutManager;private CourseAdapter mCourseAdapter;DatabaseRepository mRepository;
+    int mTermId; String mName; String mStartD;  String mEndD;  TermTable mSelectedTerm;
+    public List<CourseTable> mAllCourses; CourseTable mCourses;
+    EditText mEditName;EditText mEditStartDate;EditText mEndDate;
+    Calendar mCalendarStart = Calendar.getInstance();Calendar mCalendarEnd = Calendar.getInstance();DatePickerDialog.OnDateSetListener mStartDatePicker;DatePickerDialog.OnDateSetListener mEndDatePicker;
+    CourseAdapter mAdapter;
+    int getExtraTermID;
+    List<CourseTable> courseInTermList;
+   //------------------OnCreate--------------------------//
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_edit);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        // Not doing anything here, fields are blank on create
-        termName = findViewById(R.id.edit_text_title);
-        startDate = findViewById(R.id.edit_text_startDate);
-        endDate = findViewById(R.id.edit_text_endDate);
         mRepository = new DatabaseRepository(getApplication());
 
-        termId = getIntent().getIntExtra("termId", -1);
-        for (TermTable t: mRepository.getAllTermsFromRepo()){
-            if (t.getTermId() == termId){
-                selectedTerm = t;
+        getAndSetViewsById();
+        setRecyclerViewAndAdapter();
+        getTerm();
+        getAllCourses();
+
+        // gets and sets courses for recycleview
+        mCourseAdapter.courseSetter(courseInTermList);
+    //    setSwipeDelete();
+        setDatePicker();
+
+    }
+    //------------------OnCreate--------------------------//
+
+    public void setRecyclerViewAndAdapter(){
+        mRecyclerView = findViewById(R.id.edit_term_recyler);
+        mLayoutManager = new LinearLayoutManager(this);
+        mCourseAdapter = new CourseAdapter(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mCourseAdapter);
+
+
+    }
+
+    public void getTerm(){
+        mTermId = getIntent().getIntExtra("termId", -1);
+        for (TermTable t : mRepository.getAllTermsFromRepo()) {
+            if (t.getTermId() == mTermId) {
+                mSelectedTerm = t;
+                getExtraTermID = t.getTermId();
             }
         }
-
-        if (selectedTerm != null){
-            name=selectedTerm.getTermTitle();
-            startD = selectedTerm.getStartOfTerm();
-            endD = selectedTerm.getEndOfTerm();
+        if (mSelectedTerm != null) {
+            mName = mSelectedTerm.getTermTitle();
+            mStartD = mSelectedTerm.getStartOfTerm();
+            mEndD = mSelectedTerm.getEndOfTerm();
         }
-            termName.setText(name);
-            startDate.setText(startD);
-            endDate.setText(endD);
-
-        sDate = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendarStart.set(Calendar.YEAR, year);
-                calendarStart.set(Calendar.MONTH, month);
-                calendarStart.set(Calendar.DAY_OF_MONTH, day);
-                String myFormat = "MM/dd/yyyy";
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-                updateLabelStartDate();
+        mEditName.setText(mName);
+        mEditStartDate.setText(mStartD);
+        mEndDate.setText(mEndD);
+    }
+    public void getAllCourses(){
+        mAllCourses = mRepository.getAllCoursesFromRep();
+        courseInTermList = new ArrayList<>();
+        for (CourseTable course: mAllCourses){
+            if (course.getCourseTermId() == getExtraTermID){
+                courseInTermList.add(course);
             }
-        };
+        }
+    }
 
-        startDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DatePickerDialog(EditTerm.this, sDate, calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH)
-                        , calendarStart.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-        eDate = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendarEnd.set(Calendar.YEAR, year);
-                calendarEnd.set(Calendar.MONTH, month);
-                calendarEnd.set(Calendar.DAY_OF_MONTH, day);
-                String myFormat = "MM/dd/yyyy";
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-                updateLabelEndDate();
-            }
-        };
-        endDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DatePickerDialog(EditTerm.this, eDate, calendarEnd.get(Calendar.YEAR), calendarEnd.get(Calendar.MONTH)
-                        , calendarEnd.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
+    public void addCourseOnClick(View view) {
+        Intent intent = new Intent(this, AddEditCourse.class );
+        intent.putExtra("selectedTermId", mTermId);
+        startActivity(intent);
 
     }
 
     public void saveTermOnClickEdit(View view) {
-        String name = termName.getText().toString();
-        String start = startDate.getText().toString();
-        String end = endDate.getText().toString();
-
+        String name = mEditName.getText().toString();
+        String start = mEditStartDate.getText().toString();
+        String end = mEndDate.getText().toString();
 // todo may need validation for empty fields
-
-        TermTable updatedTerm = new TermTable(termId, name, start, end );
+        TermTable updatedTerm = new TermTable(mTermId, name, start, end);
         mRepository.insert(updatedTerm);
 
         Intent intent = new Intent(this, TermsList.class);
         startActivity(intent);
-        Toast.makeText(this, "Does this work?", Toast.LENGTH_SHORT).show();
 
     }
 
     private void updateLabelStartDate() {
         String format = "MM/dd/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
-        startDate.setText(sdf.format(calendarStart.getTime()));
+        mEditStartDate.setText(sdf.format(mCalendarStart.getTime()));
     }
 
     private void updateLabelEndDate() {
         String format = "MM/dd/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
-        endDate.setText(sdf.format(calendarEnd.getTime()));
+        mEndDate.setText(sdf.format(mCalendarEnd.getTime()));
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -145,6 +134,70 @@ public class EditTerm extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void getAndSetViewsById() {
+        mEditName = findViewById(R.id.edit_text_title);
+        mEditStartDate = findViewById(R.id.edit_text_startDate);
+        mEndDate = findViewById(R.id.edit_text_endDate);
+    }
+
+    public void setSwipeDelete(){
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override                                          // holds the clicked item? Adapter position same as index?
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                mRepository.delete(mAdapter.getCourseAt(viewHolder.getAdapterPosition()));
+                mAdapter.mCourseList.remove(viewHolder.getAdapterPosition()); //<-index of selected item
+                mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+            }
+        }).attachToRecyclerView(mRecyclerView);
+    }
+
+    public void setDatePicker(){
+        mStartDatePicker = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                mCalendarStart.set(Calendar.YEAR, year);
+                mCalendarStart.set(Calendar.MONTH, month);
+                mCalendarStart.set(Calendar.DAY_OF_MONTH, day);
+                String myFormat = "MM/dd/yyyy";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                updateLabelStartDate();
+            }
+        };
+        mEditStartDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(EditTerm.this, mStartDatePicker, mCalendarStart.get(Calendar.YEAR), mCalendarStart.get(Calendar.MONTH)
+                        , mCalendarStart.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+        mEndDatePicker = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                mCalendarEnd.set(Calendar.YEAR, year);
+                mCalendarEnd.set(Calendar.MONTH, month);
+                mCalendarEnd.set(Calendar.DAY_OF_MONTH, day);
+                String myFormat = "MM/dd/yyyy";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                updateLabelEndDate();
+            }
+        };
+        mEndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(EditTerm.this, mEndDatePicker, mCalendarEnd.get(Calendar.YEAR), mCalendarEnd.get(Calendar.MONTH)
+                        , mCalendarEnd.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
     }
 
 }
