@@ -9,32 +9,43 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject">
+        <receiver
+            android:name=".NotificationReciever"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
         <activity
             android:name=".UI.AddEditInstructor"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Add Instructor" />
         <activity
             android:name=".UI.AddEditAssessment"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Add Assessment" />
         <activity
             android:name=".UI.AddEditCourse"
             android:exported="false"
-            android:label="Add Course" />
+            android:label="Add Course"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".UI.EditTerm"
             android:exported="false"
-            android:label="Edit Term" />
+            android:label="Edit Term"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".UI.AddTerm"
             android:exported="false"
             android:label="Add Term" />
         <activity
-            android:name=".UI.MainActivity"
-            android:exported="false"
-            android:label="Home Page" />
-        <activity
             android:name=".UI.TermsList"
+            android:exported="false"
+            android:label="Terms List"/>
+        <activity
+            android:name=".UI.MainActivity"
             android:exported="true"
-            android:label="Terms List">
+            android:label="Home Page" >
+
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

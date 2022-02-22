@@ -11,6 +11,7 @@ import com.example.finalproject.database.DatabaseRepository;
 
 public class MainActivity extends AppCompatActivity {
 
+    static int alertNum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

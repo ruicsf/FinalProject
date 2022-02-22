@@ -11,14 +11,24 @@ public class AssessmentTable {
     private String assessmentTitle;
     private String assessmentType;
     private String assessmentStartDate;
+    private String assessmentEndDate;
     private int assessmentCourseId;
 
-    public AssessmentTable(int assessmentId, String assessmentTitle, String assessmentType, String assessmentStartDate, int assessmentCourseId) {
+    public AssessmentTable(int assessmentId, String assessmentTitle, String assessmentType, String assessmentStartDate, String assessmentEndDate, int assessmentCourseId) {
         this.assessmentId = assessmentId;
         this.assessmentTitle = assessmentTitle;
         this.assessmentType = assessmentType;
         this.assessmentStartDate = assessmentStartDate;
+        this.assessmentEndDate = assessmentEndDate;
         this.assessmentCourseId = assessmentCourseId;
+    }
+
+    public String getAssessmentEndDate() {
+        return assessmentEndDate;
+    }
+
+    public void setAssessmentEndDate(String assessmentEndDate) {
+        this.assessmentEndDate = assessmentEndDate;
     }
 
     public int getAssessmentId() {

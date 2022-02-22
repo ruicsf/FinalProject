@@ -11,151 +11,169 @@
 
     <TextView
         android:id="@+id/assessmentText"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
         android:background="#9ECEF3"
         android:text="Assessments"
         android:textColor="@color/black"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/instructor_recyclerView"
-        tools:layout_editor_absoluteX="3dp"
-        tools:layout_editor_absoluteY="500dp" />
+        app:layout_constraintTop_toBottomOf="@id/save_btn"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteX="464dp"
+        tools:layout_editor_absoluteY="156dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/assessment_recyclerView"
-        android:layout_width="372dp"
-        android:layout_height="130dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="294dp"
+        android:layout_height="78dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/assessmentText" />
 
     <Button
         android:id="@+id/save_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="205dp"
-        android:layout_marginBottom="325dp"
-        android:layout_marginTop="10dp"
         android:onClick="saveTermOnClick"
         android:text="Save Course"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_course_notes"
-        app:layout_constraintVertical_bias="0.518" />
+        app:layout_constraintTop_toBottomOf="@id/add_course_status"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
+        tools:layout_editor_absoluteX="568dp"
+        tools:layout_editor_absoluteY="128dp" />
 
     <EditText
         android:id="@+id/add_course_status"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="30dp"
+        app:layout_constraintTop_toTopOf="@id/statusText"
         app:layout_constraintBottom_toBottomOf="@id/statusText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/statusText" />
+        android:layout_marginEnd="20dp"
+        tools:layout_editor_absoluteX="554dp"
+        tools:layout_editor_absoluteY="72dp" />
 
     <TextView
         android:id="@+id/notesText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         android:text="Notes:"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/statusText" />
+        app:layout_constraintTop_toBottomOf="@id/startText"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="117dp" />
 
     <TextView
         android:id="@+id/endText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
         android:text="End Date: "
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/startText" />
+        app:layout_constraintTop_toTopOf="@id/nameText"
+        app:layout_constraintBottom_toBottomOf="@id/nameText"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="250dp"
+        tools:layout_editor_absoluteX="420dp"
+        tools:layout_editor_absoluteY="12dp" />
 
     <TextView
         android:id="@+id/statusText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
         android:text="Status:"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/endText" />
+        app:layout_constraintStart_toStartOf="@id/endText"
+        app:layout_constraintTop_toBottomOf="@id/endText"
+        android:layout_marginTop="15dp"
+        tools:layout_editor_absoluteX="374dp"
+        tools:layout_editor_absoluteY="81dp" />
 
     <EditText
         android:id="@+id/add_course_notes"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="30dp"
+        android:layout_marginLeft="150dp"
         android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="@id/notesText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/notesText" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/notesText"
+        tools:layout_editor_absoluteX="168dp"
+        tools:layout_editor_absoluteY="108dp" />
 
     <TextView
         android:id="@+id/nameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
         android:text="Course Name: "
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="7dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <EditText
         android:id="@+id/add_course_name"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="30dp"
+        android:layout_marginLeft="150dp"
         app:layout_constraintBottom_toBottomOf="@id/nameText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/nameText" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/nameText"
+        tools:layout_editor_absoluteX="158dp"
+        tools:layout_editor_absoluteY="-9dp" />
 
     <TextView
         android:id="@+id/startText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         android:text="Start Date: "
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nameText" />
+        app:layout_constraintTop_toBottomOf="@id/nameText"
+        tools:layout_editor_absoluteX="7dp"
+        tools:layout_editor_absoluteY="57dp" />
 
     <EditText
         android:id="@+id/add_course_end_date"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="30dp"
         android:ems="10"
         android:hint="01/01/2022"
         android:inputType="date"
+        app:layout_constraintTop_toTopOf="@id/endText"
         app:layout_constraintBottom_toBottomOf="@id/endText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/endText" />
+        android:layout_marginEnd="20dp"
+        tools:layout_editor_absoluteX="568dp"
+        tools:layout_editor_absoluteY="-4dp" />
 
     <EditText
         android:id="@+id/add_course_start_date"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="30dp"
+        android:layout_marginLeft="150dp"
         android:ems="10"
         android:hint="12/01/2021"
         android:inputType="date"
         app:layout_constraintBottom_toBottomOf="@id/startText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/startText" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/startText"
+        tools:layout_editor_absoluteX="168dp"
+        tools:layout_editor_absoluteY="58dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/instructor_recyclerView"
-        android:layout_width="370dp"
-        android:layout_height="126dp"
+        android:layout_width="283dp"
+        android:layout_height="82dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/instructorText" />
 
@@ -163,37 +181,41 @@
         android:id="@+id/add_instructor_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="68dp"
         android:onClick="addInstructorButton"
+        app:layout_constraintEnd_toEndOf="@id/instructor_recyclerView"
+        app:layout_constraintTop_toBottomOf="@id/instructorText"
+        android:layout_marginTop="10dp"
         android:src="@drawable/ic_baseline_add_24"
-        app:layout_constraintBottom_toBottomOf="@id/instructor_recyclerView"
-        app:layout_constraintEnd_toEndOf="@id/instructor_recyclerView" />
+
+        tools:layout_editor_absoluteX="213dp"
+        tools:layout_editor_absoluteY="178dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_assessment_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="72dp"
         android:onClick="addAssessmentButton"
         android:src="@drawable/ic_baseline_add_24"
-        app:layout_constraintBottom_toBottomOf="@id/assessment_recyclerView"
-        app:layout_constraintEnd_toEndOf="@id/assessment_recyclerView" />
+        app:layout_constraintTop_toBottomOf="@id/assessmentText"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@id/assessment_recyclerView"
+        android:layout_marginEnd="10dp"
+        tools:layout_editor_absoluteX="708dp"
+        tools:layout_editor_absoluteY="274dp" />
 
     <TextView
         android:id="@+id/instructorText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_width="286dp"
+        android:layout_height="0dp"
         android:background="#9ECEF3"
         android:text="Instructor"
         android:textColor="@color/black"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/save_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="5dp"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="353dp" />
+        tools:layout_editor_absoluteY="156dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

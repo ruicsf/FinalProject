@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.finalproject.Entities.CourseTable;
 import com.example.finalproject.Entities.TermTable;
 import com.example.finalproject.R;
 import com.example.finalproject.Adapters.TermAdapter;
@@ -37,6 +38,7 @@ public class TermsList extends AppCompatActivity {
         setContentView(R.layout.activity_terms_list);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        databaseRepository = new DatabaseRepository(getApplication());
 
         // Deals with adapter and recyleview
         getTermsList();
@@ -48,14 +50,24 @@ public class TermsList extends AppCompatActivity {
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
             }
-            // for swiping and deleting
+
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 // todo add code for delete not allowed here with courses
+                for (CourseTable course: databaseRepository.getAllCoursesFromRep()){
+                    if (course.getCourseTermId() == mAdapter.getTermAt(viewHolder.getAdapterPosition()).getTermId())
+                        if (mAdapter.getTermAt(viewHolder.getAdapterPosition()).getTermId() == course.getCourseTermId()){
+                            mAdapter.notifyDataSetChanged();
+                            Toast.makeText(TermsList.this, "Please remove all courses in term before deleting", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                }
+
                 databaseRepository.delete(mAdapter.getTermAt(viewHolder.getAdapterPosition()));
                 mAdapter.mTermsList.remove(viewHolder.getAdapterPosition());
                 mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-                Toast.makeText(TermsList.this, "Note Deleted", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(TermsList.this, "Term Deleted", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(mRecyclerView);
 
@@ -63,7 +75,6 @@ public class TermsList extends AppCompatActivity {
 
     // get application
     public void getTermsList() {
-        databaseRepository = new DatabaseRepository(getApplication());
         termTableList = databaseRepository.getAllTermsFromRepo();
         //todo add course and assessment list here
     }
@@ -88,24 +99,4 @@ public class TermsList extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.delete_all_terms:
-                databaseRepository.deleteAllTerms();
-                Toast.makeText(this, "All notes deleted", Toast.LENGTH_SHORT).show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
 }

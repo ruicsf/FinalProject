@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.finalproject.Adapters.CourseAdapter;
 import com.example.finalproject.Entities.CourseTable;
@@ -27,21 +28,39 @@ import java.util.List;
 import java.util.Locale;
 
 public class EditTerm extends AppCompatActivity {
-    private RecyclerView mRecyclerView;private RecyclerView.LayoutManager mLayoutManager;private CourseAdapter mCourseAdapter;DatabaseRepository mRepository;
-    int mTermId; String mName; String mStartD;  String mEndD;  TermTable mSelectedTerm;
-    public List<CourseTable> mAllCourses; CourseTable mCourses;
-    EditText mEditName;EditText mEditStartDate;EditText mEndDate;
-    Calendar mCalendarStart = Calendar.getInstance();Calendar mCalendarEnd = Calendar.getInstance();DatePickerDialog.OnDateSetListener mStartDatePicker;DatePickerDialog.OnDateSetListener mEndDatePicker;
-    CourseAdapter mAdapter;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private CourseAdapter mCourseAdapter;
+    DatabaseRepository mRepository;
+
+    EditText mEditName;
+    EditText mEditStartDate;
+    EditText mEndDate;
+
+    Calendar mCalendarStart = Calendar.getInstance();
+    Calendar mCalendarEnd = Calendar.getInstance();
+    DatePickerDialog.OnDateSetListener mStartDatePicker;
+    DatePickerDialog.OnDateSetListener mEndDatePicker;
+
+    int mTermId;
     int getExtraTermID;
+    String mName;
+    String mStartD;
+    String mEndD;
+    TermTable mSelectedTerm;
+    List<CourseTable> mAllCourses;
+    CourseTable mCourses;
+
     List<CourseTable> courseInTermList;
-   //------------------OnCreate--------------------------//
+
+    //------------------OnCreate--------------------------//
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_edit);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         mRepository = new DatabaseRepository(getApplication());
 
         getAndSetViewsById();
@@ -51,13 +70,33 @@ public class EditTerm extends AppCompatActivity {
 
         // gets and sets courses for recycleview
         mCourseAdapter.courseSetter(courseInTermList);
-    //    setSwipeDelete();
+        //    setSwipeDelete();
         setDatePicker();
 
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            // for swiping and deleting
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                mRepository.delete(mCourseAdapter.getCourseAt(viewHolder.getAdapterPosition()));
+                mCourseAdapter.mCourseList.remove(viewHolder.getAdapterPosition());
+                mCourseAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                Toast.makeText(EditTerm.this, "Course Deleted", Toast.LENGTH_SHORT).show();
+
+
+            }
+        }).attachToRecyclerView(mRecyclerView);
+
     }
+
     //------------------OnCreate--------------------------//
 
-    public void setRecyclerViewAndAdapter(){
+    public void setRecyclerViewAndAdapter() {
         mRecyclerView = findViewById(R.id.edit_term_recyler);
         mLayoutManager = new LinearLayoutManager(this);
         mCourseAdapter = new CourseAdapter(this);
@@ -67,7 +106,7 @@ public class EditTerm extends AppCompatActivity {
 
     }
 
-    public void getTerm(){
+    public void getTerm() {
         mTermId = getIntent().getIntExtra("termId", -1);
         for (TermTable t : mRepository.getAllTermsFromRepo()) {
             if (t.getTermId() == mTermId) {
@@ -84,18 +123,19 @@ public class EditTerm extends AppCompatActivity {
         mEditStartDate.setText(mStartD);
         mEndDate.setText(mEndD);
     }
-    public void getAllCourses(){
+
+    public void getAllCourses() {
         mAllCourses = mRepository.getAllCoursesFromRep();
         courseInTermList = new ArrayList<>();
-        for (CourseTable course: mAllCourses){
-            if (course.getCourseTermId() == getExtraTermID){
+        for (CourseTable course : mAllCourses) {
+            if (course.getCourseTermId() == getExtraTermID) {
                 courseInTermList.add(course);
             }
         }
     }
 
     public void addCourseOnClick(View view) {
-        Intent intent = new Intent(this, AddEditCourse.class );
+        Intent intent = new Intent(this, AddEditCourse.class);
         intent.putExtra("selectedTermId", mTermId);
         startActivity(intent);
 
@@ -142,23 +182,8 @@ public class EditTerm extends AppCompatActivity {
         mEndDate = findViewById(R.id.edit_text_endDate);
     }
 
-    public void setSwipeDelete(){
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
 
-            @Override                                          // holds the clicked item? Adapter position same as index?
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                mRepository.delete(mAdapter.getCourseAt(viewHolder.getAdapterPosition()));
-                mAdapter.mCourseList.remove(viewHolder.getAdapterPosition()); //<-index of selected item
-                mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-            }
-        }).attachToRecyclerView(mRecyclerView);
-    }
-
-    public void setDatePicker(){
+    public void setDatePicker() {
         mStartDatePicker = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {

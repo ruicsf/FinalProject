@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+    android:padding="16dp"
+
+    tools:context=".UI.AddTerm">
+
+
+    <EditText
+        android:id="@+id/edit_text_title"
+        android:hint="Term name"
+        android:layout_width="193dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:paddingLeft="5dp"
+        app:layout_constraintStart_toEndOf="@id/textView"
+        app:layout_constraintBottom_toBottomOf="@id/textView"
+        app:layout_constraintTop_toTopOf="@id/textView"
+        tools:layout_editor_absoluteY="38dp" />
+
+    <EditText
+        android:id="@+id/edit_text_startDate"
+        android:hint="01/01/2022"
+        android:layout_width="129dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintStart_toStartOf="@id/edit_text_title"
+        app:layout_constraintBottom_toBottomOf="@id/textView2"
+        app:layout_constraintTop_toTopOf="@id/textView2"
+
+        />
+
+
+    <EditText
+        android:id="@+id/edit_text_endDate"
+        android:hint="02/01/2022"
+        android:layout_width="129dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintStart_toStartOf="@id/edit_text_title"
+        app:layout_constraintBottom_toBottomOf="@id/textView3"
+        app:layout_constraintTop_toTopOf="@id/textView3" />
+
+    <TextView
+        android:id="@+id/textView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="38dp"
+        android:text="Term:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Large"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Start:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Large"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/textView"
+        app:layout_constraintTop_toBottomOf="@id/textView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="End:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Large"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/textView"
+        app:layout_constraintTop_toBottomOf="@id/textView2" />
+
+    <Button
+        android:id="@+id/add_screen_saveTerm_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/textView3"
+        android:layout_marginTop="75dp"
+        android:onClick="saveTermOnClick"
+        app:layout_constraintStart_toStartOf="@id/edit_text_endDate"
+
+        android:text="Save Term"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

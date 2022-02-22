@@ -21,27 +21,25 @@
 
     <ImageView
         android:id="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@id/textView4"
-        android:layout_marginTop="50dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="234dp"
         android:layout_height="224dp"
-        app:srcCompat="@drawable/ic_baseline_school_24"
-        tools:layout_editor_absoluteX="97dp"
-        tools:layout_editor_absoluteY="296dp" />
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView4"
+        app:srcCompat="@drawable/ic_baseline_school_24" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:text="Course Scheduler"
         android:textSize="24dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="180dp"
-        tools:layout_editor_absoluteX="150dp"
-        tools:layout_editor_absoluteY="136dp" />
+        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
